@@ -1,1 +1,1 @@
-# etch-a-sketch
+This project will showcase a sketch pad on a web browser environment.
