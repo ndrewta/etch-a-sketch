@@ -27,10 +27,7 @@ body {
 
 .squares {
     border: 1px solid black;
-}
-
-.squares:hover {
-    background-color: black;
+    background-color: white;
 }
 
 #btn {
@@ -41,6 +38,6 @@ body {
 
 #input {
     margin: -40px;
-    width: 135px;
+    width: 130px;
     padding: 5px;
 }
