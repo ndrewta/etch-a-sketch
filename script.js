@@ -3,19 +3,15 @@ function updateRows(x) {
     for (let i = 0; i < x; i++) {
         rows += "auto "
     }
-    gridDiv.style.setProperty('grid-template-columns', rows)
+    canvas.style.setProperty('grid-template-columns', rows)
 }
 
 function makeSquares(x) {
     for (let i = 0; i < (x * x); i++) {
         let squares = document.createElement('div')
         squares.setAttribute('class', 'squares')
-        gridDiv.appendChild(squares)
-        squares.addEventListener('mousemove', () => {
-            if (primaryMouseButtonState) {
-                squares.style.setProperty('background-color', 'black')
-            }
-        })
+        canvas.appendChild(squares)
+        draw(squares)
     }
 }
 
@@ -27,27 +23,29 @@ function updateGrid() {
     }
     document.getElementById('input').value = input
 
-    while (gridDiv.hasChildNodes()) {
-        gridDiv.removeChild(gridDiv.firstChild)
+    while (canvas.hasChildNodes()) {
+        canvas.removeChild(canvas.firstChild)
     }
     if (input <= 100) {
         makeGrid(input)
     } else if (input > 100) {
         makeGrid (100)
+        document.getElementById('input').value = 100
     }
 }
 
-function setPrimaryMouseButtonStateTrue(e) {
+function setInteractionStateTrue(e) {
     if (e.button == 0) {
-        primaryMouseButtonState = true
+        interactionState = true
+        e.preventDefault()
     } else {
-        primaryMouseButtonState = false
+        interactionState = false
     }
 }
 
-function setPrimaryMouseButtonStateFalse(e) {
+function setInteractionStateFalse(e) {
     if (e.button == 0) {
-        primaryMouseButtonState = false
+        interactionState = false
     }
 }
 
@@ -56,8 +54,16 @@ function makeGrid(x) {
     makeSquares(x)
 }
 
-let primaryMouseButtonState = false
-let previousInput = 16
+function draw(squares) {
+    squares.addEventListener('mousemove', () => {
+        if (interactionState) {
+            squares.style.setProperty('background-color', 'black')
+            }
+        }
+    )
+}
+
+let interactionState = false
 
 const container = document.querySelector('#container')
 
@@ -75,13 +81,13 @@ input.setAttribute('id', 'input')
 input.value = "16"
 inputContainer.appendChild(input)
 
-const gridDiv = document.createElement('div')
-gridDiv.setAttribute('id','grid')
-container.appendChild(gridDiv)
+const canvas = document.createElement('div')
+canvas.setAttribute('id','canvas')
+container.appendChild(canvas)
 
 document.getElementById('btn').addEventListener('click', updateGrid)
 document.getElementById('input').addEventListener('click', e => e.target.value = "")
-document.addEventListener('mousedown', setPrimaryMouseButtonStateTrue)
-document.addEventListener('mouseup', setPrimaryMouseButtonStateFalse)
+canvas.addEventListener('mousedown', setInteractionStateTrue)
+canvas.addEventListener('mouseup', setInteractionStateFalse)
 
 makeGrid(16)
