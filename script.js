@@ -16,22 +16,12 @@ function makeSquares(x) {
 
 function updateGrid() {
     interactionState = false
-    let input = document.getElementById('input').value
-      
-    if (!input || input < 16) {
-        input = 16
-    }
-    document.getElementById('input').value = input
+    let value = document.getElementById('slider').value
 
     while (canvas.hasChildNodes()) {
         canvas.removeChild(canvas.firstChild)
     }
-    if (input <= 100) {
-        makeGrid(input)
-    } else if (input > 100) {
-        makeGrid (100)
-        document.getElementById('input').value = 100
-    }
+    makeGrid(value)
 }
 
 function setInteractionStateTrue(e) {
@@ -62,7 +52,6 @@ let l = colorLightness
         if (interactionState) {
             if (rgbState) {
                 square.style.backgroundColor = rgb(l)
-                colorLightness -= 5
             } else {
                 square.style.backgroundColor = 'black'
             }
@@ -75,10 +64,10 @@ function rgb(l) {
     let h = Math.floor(Math.random() * 360)
     let s = Math.floor(Math.random() * 101)
     
+    colorLightness -= 5
     if (!colorLightness) {
         colorLightness = 50
     }
-
     let value = 'hsl(' + h + ', ' + s + '%, ' + l + '%)'
     return value
 }
@@ -93,11 +82,20 @@ function switchRgb() {
     }
 }
 
+function updateSliderValue() {
+    sliderValue.textContent = slider.value
+    updateGrid()
+}
+
 let interactionState = false
 let rgbState = false
 let colorLightness = 50
 
-const container = document.querySelector('#container')
+const container = document.querySelector('.container')
+
+const title = document.createElement('h1')
+title.textContent = 'Etch-A-Sketch'
+container.appendChild(title)
 
 const inputContainer = document.createElement('div')
 inputContainer.setAttribute('id', 'input-container')
@@ -113,18 +111,26 @@ updateBtn.setAttribute('id', 'update-btn')
 updateBtn.textContent = "Reset grid size"
 inputContainer.appendChild(updateBtn)
 
-const input = document.createElement('input')
-input.setAttribute('id', 'input')
-input.value = "16"
-inputContainer.appendChild(input)
-
 const canvas = document.createElement('div')
 canvas.setAttribute('id','canvas')
 container.appendChild(canvas)
 
+const slider = document.createElement('input')
+slider.type = 'range'
+slider.min = 16
+slider.max = 100
+slider.value = 16
+slider.setAttribute('id', 'slider')
+inputContainer.appendChild(slider)
+
+const sliderValue = document.createElement('p')
+sliderValue.setAttribute('id', 'slider-value')
+sliderValue.textContent = slider.value
+inputContainer.insertBefore(sliderValue, slider)
+
 document.getElementById('update-btn').addEventListener('click', updateGrid)
 document.getElementById('rgb-btn').addEventListener('click', switchRgb)
-document.getElementById('input').addEventListener('click', e => e.target.value = "")
+document.getElementById('slider').addEventListener('change', updateSliderValue)
 canvas.addEventListener('mousedown', setInteractionStateTrue)
 canvas.addEventListener('mouseup', setInteractionStateFalse)
 canvas.addEventListener('mousemove', e => draw(e))
