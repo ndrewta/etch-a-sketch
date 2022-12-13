@@ -56,25 +56,31 @@ function makeGrid(x) {
 
 function draw(event) {
 let square = event.target
+let l = colorLightness
 
     if (!square.style.backgroundColor) {
         if (interactionState) {
             if (rgbState) {
-                square.style.backgroundColor = rgb()
+                square.style.backgroundColor = rgb(l)
+                colorLightness -= 5
             } else {
-                square.style.backgroundColor = "black"
+                square.style.backgroundColor = 'black'
             }
         }
     }
 
 }
 
-function rgb() {
-    let r = Math.floor(Math.random() * 256)
-    let g = Math.floor(Math.random() * 256)
-    let b = Math.floor(Math.random() * 256)
-    let rgb = 'rgb(' + r + ', ' + g + ', ' + b + ')'
-    return rgb
+function rgb(l) {
+    let h = Math.floor(Math.random() * 360)
+    let s = Math.floor(Math.random() * 101)
+    
+    if (!colorLightness) {
+        colorLightness = 50
+    }
+
+    let value = 'hsl(' + h + ', ' + s + '%, ' + l + '%)'
+    return value
 }
 
 function switchRgb() {
@@ -89,6 +95,7 @@ function switchRgb() {
 
 let interactionState = false
 let rgbState = false
+let colorLightness = 50
 
 const container = document.querySelector('#container')
 
