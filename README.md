@@ -1,1 +1,1 @@
-This project will showcase a sketch pad on a web browser environment.
+This project will showcase an etch-a-sketch in a webpage.
