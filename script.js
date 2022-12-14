@@ -83,33 +83,37 @@ function switchRgb() {
 }
 
 function updateSliderValue() {
-    sliderValue.textContent = slider.value
+    sliderValue.textContent = slider.value + 'x' + slider.value
     updateGrid()
 }
+
 
 let interactionState = false
 let rgbState = false
 let colorLightness = 50
 
 const container = document.querySelector('.container')
-
 const title = document.createElement('h1')
 title.textContent = 'Etch-A-Sketch'
 container.appendChild(title)
 
-const inputContainer = document.createElement('div')
-inputContainer.setAttribute('id', 'input-container')
-container.appendChild(inputContainer)
+const sliderContainer = document.createElement('div')
+sliderContainer.setAttribute('id', 'slider-container')
+container.appendChild(sliderContainer)
+
+const btnContainer = document.createElement('div')
+btnContainer.setAttribute('id', 'btn-container')
+container.appendChild(btnContainer)
 
 const rgbBtn = document.createElement('button')
 rgbBtn.setAttribute('id', 'rgb-btn')
 rgbBtn.textContent = "Enable RGB"
-inputContainer.appendChild(rgbBtn)
+btnContainer.appendChild(rgbBtn)
 
 const updateBtn = document.createElement('button')
 updateBtn.setAttribute('id', 'update-btn')
 updateBtn.textContent = "Reset grid size"
-inputContainer.appendChild(updateBtn)
+btnContainer.appendChild(updateBtn)
 
 const canvas = document.createElement('div')
 canvas.setAttribute('id','canvas')
@@ -121,12 +125,12 @@ slider.min = 16
 slider.max = 100
 slider.value = 16
 slider.setAttribute('id', 'slider')
-inputContainer.appendChild(slider)
+sliderContainer.appendChild(slider)
 
 const sliderValue = document.createElement('p')
 sliderValue.setAttribute('id', 'slider-value')
-sliderValue.textContent = slider.value
-inputContainer.insertBefore(sliderValue, slider)
+sliderValue.textContent = slider.value + 'x' + slider.value
+sliderContainer.insertBefore(sliderValue, slider)
 
 document.getElementById('update-btn').addEventListener('click', updateGrid)
 document.getElementById('rgb-btn').addEventListener('click', switchRgb)
