@@ -1,3 +1,8 @@
+let interactionState = false
+let rgbState = false
+let colorLightness = 50
+
+
 function updateRows(x) {
     let rows = ""
     for (let i = 0; i < x; i++) {
@@ -87,10 +92,6 @@ function updateSliderValue() {
     updateGrid()
 }
 
-
-let interactionState = false
-let rgbState = false
-let colorLightness = 50
 
 const container = document.querySelector('.container')
 const title = document.createElement('h1')
